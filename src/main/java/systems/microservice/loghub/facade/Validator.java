@@ -41,6 +41,14 @@ public final class Validator {
     private Validator() {
     }
 
+    public static boolean isPresent(String value) {
+        return (value != null) && !value.isEmpty();
+    }
+
+    public static boolean isAbsent(String value) {
+        return !Validator.isPresent(value);
+    }
+
     public static boolean isId(String id) {
         if (id != null) {
             int l = id.length();
@@ -277,6 +285,26 @@ public final class Validator {
             return value;
         } else {
             throw new IllegalArgumentException(String.format("Argument '%s' is %s not in range [%s, %s]", argument, value.toString(), min.toString(), max.toString()));
+        }
+    }
+
+    public static String present(String argument, String value) {
+        Validator.notNull("argument", argument);
+
+        if (Validator.isPresent(value)) {
+            return value;
+        } else {
+            throw new IllegalArgumentException(String.format("Argument '%s' is '%s' not present", argument, value));
+        }
+    }
+
+    public static String absent(String argument, String value) {
+        Validator.notNull("argument", argument);
+
+        if (Validator.isAbsent(value)) {
+            return value;
+        } else {
+            throw new IllegalArgumentException(String.format("Argument '%s' is '%s' not absent", argument, value));
         }
     }
 
