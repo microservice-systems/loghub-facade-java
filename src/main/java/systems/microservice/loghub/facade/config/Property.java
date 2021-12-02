@@ -28,6 +28,16 @@ public final class Property {
     private Property() {
     }
 
+    private static String getVariable(String variable) {
+        if (variable != null) {
+            String v = System.getenv(variable);
+            if (Validator.isPresent(v)) {
+                return v;
+            }
+        }
+        return null;
+    }
+
     public static String get(String variable, String property, String resource, String defaultValue) {
         return null;
     }
