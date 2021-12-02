@@ -17,6 +17,9 @@
 
 package systems.microservice.loghub.facade.config;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Dmitry Kotlyarov
  * @since 1.0
@@ -25,11 +28,19 @@ public final class Property {
     private Property() {
     }
 
-    public static <T> T get(Class<T> clazz, String variable, String property, String resource, T defaultValue) {
-        return get(clazz, variable, property, resource, defaultValue, null);
+    public static String get(String variable, String property, String resource, String defaultValue) {
+        return null;
     }
 
-    public static <T> T get(Class<T> clazz, String variable, String property, String resource, T defaultValue, IValidator<T> validator) {
+    public static String[] getArray(String variable, String property, String resource, String defaultValue) {
+        return null;
+    }
+
+    public static List<String> getList(String variable, String property, String resource, String defaultValue) {
+        return null;
+    }
+
+    public static Map<String, String> getMap(String variable, String property, String resource, String defaultValue) {
         return null;
     }
 }
