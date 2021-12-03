@@ -38,6 +38,16 @@ public final class Property {
         return null;
     }
 
+    private static String getProperty(String property) {
+        if (property != null) {
+            String p = System.getProperty(property);
+            if (Validator.isPresent(p)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
     public static String get(String variable, String property, String resource, String defaultValue) {
         return null;
     }
