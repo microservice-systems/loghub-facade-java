@@ -17,6 +17,7 @@
 
 package systems.microservice.loghub.facade.config;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -94,8 +95,26 @@ public final class Property {
         }
     }
 
-    public static List<String> getList(String variable, String property, String resource, String defaultValue) {
-        return null;
+    public static List<String> getList(String variable, String property, String resource, List<String> defaultValue) {
+        String p = get(variable, property, resource, null);
+        if (p != null) {
+            p = p.trim();
+            if (p.startsWith("{")) {
+                if (p.endsWith("}")) {
+                    String[] a = p.substring(1, p.length() - 1).split(",");
+                    for (int i = 0, ci = a.length; i < ci; ++i) {
+                        a[i] = a[i].trim();
+                    }
+                    return Arrays.asList(a);
+                } else {
+                    throw new RuntimeException(String.format("List '%s' is not ended with '}'", p));
+                }
+            } else {
+                throw new RuntimeException(String.format("List '%s' is not started with '{'", p));
+            }
+        } else {
+            return defaultValue;
+        }
     }
 
     public static Map<String, String> getMap(String variable, String property, String resource, String defaultValue) {
