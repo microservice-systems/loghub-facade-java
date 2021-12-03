@@ -18,6 +18,8 @@
 package systems.microservice.loghub.facade.config;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -117,7 +119,33 @@ public final class Property {
         }
     }
 
-    public static Map<String, String> getMap(String variable, String property, String resource, String defaultValue) {
-        return null;
+    public static Map<String, String> getMap(String variable, String property, String resource, Map<String, String> defaultValue) {
+        String p = get(variable, property, resource, null);
+        if (p != null) {
+            p = p.trim();
+            if (p.startsWith("{")) {
+                if (p.endsWith("}")) {
+                    String[] a = p.substring(1, p.length() - 1).split(",");
+                    LinkedHashMap<String, String> m = new LinkedHashMap<>(a.length);
+                    for (int i = 0, ci = a.length; i < ci; ++i) {
+                        String[] e = a[i].trim().split(":");
+                        if (e.length == 2) {
+                            String k = e[0].trim();
+                            String v = e[1].trim();
+                            m.put(k, v);
+                        } else {
+                            throw new RuntimeException(String.format("Entry %d '%s' in map '%s' is not split with ':'", i, a[i], p));
+                        }
+                    }
+                    return Collections.unmodifiableMap(m);
+                } else {
+                    throw new RuntimeException(String.format("Map '%s' is not ended with '}'", p));
+                }
+            } else {
+                throw new RuntimeException(String.format("Map '%s' is not started with '{'", p));
+            }
+        } else {
+            return defaultValue;
+        }
     }
 }
