@@ -48,6 +48,16 @@ public final class Property {
         return null;
     }
 
+    private static String getResource(String resource) {
+        if (resource != null) {
+            String r = Resource.getString(resource);
+            if (Validator.isPresent(r)) {
+                return r;
+            }
+        }
+        return null;
+    }
+
     public static String get(String variable, String property, String resource, String defaultValue) {
         return null;
     }
