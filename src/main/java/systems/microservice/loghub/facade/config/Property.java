@@ -59,7 +59,17 @@ public final class Property {
     }
 
     public static String get(String variable, String property, String resource, String defaultValue) {
-        return null;
+        String p = getVariable(variable);
+        if (p == null) {
+            p = getProperty(property);
+            if (p == null) {
+                p = getResource(resource);
+                if (p == null) {
+                    p = defaultValue;
+                }
+            }
+        }
+        return p;
     }
 
     public static String[] getArray(String variable, String property, String resource, String defaultValue) {
