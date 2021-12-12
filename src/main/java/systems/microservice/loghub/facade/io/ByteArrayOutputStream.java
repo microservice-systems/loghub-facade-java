@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package systems.microservice.loghub.facade.stream;
+package systems.microservice.loghub.facade.io;
 
 import systems.microservice.loghub.facade.config.Validator;
 
