@@ -32,17 +32,17 @@ public class Event implements Serializable {
     public final Throwable exception;
     public final Tag tag;
     public final Tag[] tags;
-    public final Type type1;
+    public final Image image;
     public final Type type2;
 
-    public Event(Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Type type1, Type type2) {
+    public Event(Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Type type2) {
         this.level = level;
         this.logger = logger;
         this.type = type;
         this.exception = exception;
         this.tag = tag;
         this.tags = tags;
-        this.type1 = type1;
+        this.image = image;
         this.type2 = type2;
     }
 }
