@@ -33,9 +33,9 @@ public class Event implements Serializable {
     public final Tag tag;
     public final Tag[] tags;
     public final Image image;
-    public final Type type2;
+    public final Blob blob;
 
-    public Event(Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Type type2) {
+    public Event(Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob) {
         this.level = level;
         this.logger = logger;
         this.type = type;
@@ -43,6 +43,6 @@ public class Event implements Serializable {
         this.tag = tag;
         this.tags = tags;
         this.image = image;
-        this.type2 = type2;
+        this.blob = blob;
     }
 }
