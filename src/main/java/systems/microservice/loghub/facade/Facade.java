@@ -17,15 +17,18 @@
 
 package systems.microservice.loghub.facade;
 
+import systems.microservice.loghub.facade.config.Validator;
+
 import java.util.ArrayList;
 import java.util.ServiceLoader;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author Dmitry Kotlyarov
  * @since 1.0
  */
 public final class Facade {
+    private static final AtomicLong eventNumber = new AtomicLong(0L);
     private static final ThreadLocal<ThreadInfo> threadInfo = ThreadLocal.withInitial(() -> new ThreadInfo());
     private static final Connector[] connectors = createConnectors();
 
@@ -68,6 +71,8 @@ public final class Facade {
     }
 
     public static boolean isEnabled(Level level) {
+        Validator.notNull("level", level);
+
         ThreadInfo ti = threadInfo.get();
         if (!ti.inside) {
             ti.inside = true;
@@ -84,37 +89,37 @@ public final class Facade {
         return false;
     }
 
-    public static void log(long time, long number, Input input,
+    public static void log(long time, Input input,
                            String clazz, String method, String statement, String file, int line,
                            Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
                            String message) {
     }
 
-    public static void log(long time, long number, Input input,
+    public static void log(long time, Input input,
                            String clazz, String method, String statement, String file, int line,
                            Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
                            String message, Object param1) {
     }
 
-    public static void log(long time, long number, Input input,
+    public static void log(long time, Input input,
                            String clazz, String method, String statement, String file, int line,
                            Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
                            String message, Object param1, Object param2) {
     }
 
-    public static void log(long time, long number, Input input,
+    public static void log(long time, Input input,
                            String clazz, String method, String statement, String file, int line,
                            Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
                            String message, Object param1, Object param2, Object param3) {
     }
 
-    public static void log(long time, long number, Input input,
+    public static void log(long time, Input input,
                            String clazz, String method, String statement, String file, int line,
                            Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
                            String message, Object param1, Object param2, Object param3, Object param4) {
     }
 
-    public static void log(long time, long number, Input input,
+    public static void log(long time, Input input,
                            String clazz, String method, String statement, String file, int line,
                            Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
                            String message, Object param1, Object param2, Object param3, Object param4, Object param5) {
