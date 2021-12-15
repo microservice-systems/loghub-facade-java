@@ -23,7 +23,6 @@ package systems.microservice.loghub.facade;
  */
 public interface Connector {
     public String getInfo();
-    public boolean isInside();
     public boolean isEnabled();
     public boolean isEnabled(Level level);
     public void log(long time, long number, Input input,

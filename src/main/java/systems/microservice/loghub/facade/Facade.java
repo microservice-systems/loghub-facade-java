@@ -19,12 +19,14 @@ package systems.microservice.loghub.facade;
 
 import java.util.ArrayList;
 import java.util.ServiceLoader;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Dmitry Kotlyarov
  * @since 1.0
  */
 public final class Facade {
+    private static final ThreadLocal<ThreadInfo> threadInfo = ThreadLocal.withInitial(() -> new ThreadInfo());
     private static final Connector[] connectors = createConnectors();
 
     private Facade() {
@@ -42,5 +44,90 @@ public final class Facade {
             }
         }
         return cs.toArray(new Connector[cs.size()]);
+    }
+
+    public static boolean isInside() {
+        return threadInfo.get().inside;
+    }
+
+    public static boolean isEnabled() {
+        ThreadInfo ti = threadInfo.get();
+        if (!ti.inside) {
+            ti.inside = true;
+            try {
+                for (int i = 0, ci = connectors.length; i < ci; ++i) {
+                    if (connectors[i].isEnabled()) {
+                        return true;
+                    }
+                }
+            } finally {
+                ti.inside = false;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isEnabled(Level level) {
+        ThreadInfo ti = threadInfo.get();
+        if (!ti.inside) {
+            ti.inside = true;
+            try {
+                for (int i = 0, ci = connectors.length; i < ci; ++i) {
+                    if (connectors[i].isEnabled(level)) {
+                        return true;
+                    }
+                }
+            } finally {
+                ti.inside = false;
+            }
+        }
+        return false;
+    }
+
+    public static void log(long time, long number, Input input,
+                           String clazz, String method, String statement, String file, int line,
+                           Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
+                           String message) {
+    }
+
+    public static void log(long time, long number, Input input,
+                           String clazz, String method, String statement, String file, int line,
+                           Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
+                           String message, Object param1) {
+    }
+
+    public static void log(long time, long number, Input input,
+                           String clazz, String method, String statement, String file, int line,
+                           Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
+                           String message, Object param1, Object param2) {
+    }
+
+    public static void log(long time, long number, Input input,
+                           String clazz, String method, String statement, String file, int line,
+                           Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
+                           String message, Object param1, Object param2, Object param3) {
+    }
+
+    public static void log(long time, long number, Input input,
+                           String clazz, String method, String statement, String file, int line,
+                           Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
+                           String message, Object param1, Object param2, Object param3, Object param4) {
+    }
+
+    public static void log(long time, long number, Input input,
+                           String clazz, String method, String statement, String file, int line,
+                           Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
+                           String message, Object param1, Object param2, Object param3, Object param4, Object param5) {
+    }
+
+    public static void collect(String metric, long count, long value, int precision, String unit) {
+    }
+
+    private static final class ThreadInfo {
+        public boolean inside;
+
+        public ThreadInfo() {
+            this.inside = false;
+        }
     }
 }
