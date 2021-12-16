@@ -58,8 +58,9 @@ public final class Facade {
         if (!ti.inside) {
             ti.inside = true;
             try {
-                for (int i = 0, ci = connectors.length; i < ci; ++i) {
-                    if (connectors[i].isEnabled()) {
+                Connector[] cs = connectors;
+                for (int i = 0, ci = cs.length; i < ci; ++i) {
+                    if (cs[i].isEnabled()) {
                         return true;
                     }
                 }
@@ -77,8 +78,9 @@ public final class Facade {
         if (!ti.inside) {
             ti.inside = true;
             try {
-                for (int i = 0, ci = connectors.length; i < ci; ++i) {
-                    if (connectors[i].isEnabled(level)) {
+                Connector[] cs = connectors;
+                for (int i = 0, ci = cs.length; i < ci; ++i) {
+                    if (cs[i].isEnabled(level)) {
                         return true;
                     }
                 }
@@ -93,36 +95,180 @@ public final class Facade {
                            String clazz, String method, String statement, String file, int line,
                            Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
                            String message) {
+        Validator.inRangeLong("time", time, 0L, Long.MAX_VALUE);
+        Validator.notNull("input", input);
+        Validator.notNull("level", level);
+        Validator.notNull("logger", logger);
+        Validator.notNull("type", type);
+        Validator.notNull("message", message);
+
+        if (isEnabled(level)) {
+            ThreadInfo ti = threadInfo.get();
+            if (!ti.inside) {
+                ti.inside = true;
+                try {
+                    Connector[] cs = connectors;
+                    for (int i = 0, ci = cs.length; i < ci; ++i) {
+                        cs[i].log(time, eventNumber.getAndIncrement(), input,
+                                  clazz, method, statement, file, line,
+                                  level, logger, type, exception, tag, tags, image, blob,
+                                  message);
+                    }
+                } finally {
+                    ti.inside = false;
+                }
+            }
+        }
     }
 
     public static void log(long time, Input input,
                            String clazz, String method, String statement, String file, int line,
                            Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
                            String message, Object param1) {
+        Validator.inRangeLong("time", time, 0L, Long.MAX_VALUE);
+        Validator.notNull("input", input);
+        Validator.notNull("level", level);
+        Validator.notNull("logger", logger);
+        Validator.notNull("type", type);
+        Validator.notNull("message", message);
+
+        if (isEnabled(level)) {
+            ThreadInfo ti = threadInfo.get();
+            if (!ti.inside) {
+                ti.inside = true;
+                try {
+                    Connector[] cs = connectors;
+                    for (int i = 0, ci = cs.length; i < ci; ++i) {
+                        cs[i].log(time, eventNumber.getAndIncrement(), input,
+                                  clazz, method, statement, file, line,
+                                  level, logger, type, exception, tag, tags, image, blob,
+                                  message, param1);
+                    }
+                } finally {
+                    ti.inside = false;
+                }
+            }
+        }
     }
 
     public static void log(long time, Input input,
                            String clazz, String method, String statement, String file, int line,
                            Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
                            String message, Object param1, Object param2) {
+        Validator.inRangeLong("time", time, 0L, Long.MAX_VALUE);
+        Validator.notNull("input", input);
+        Validator.notNull("level", level);
+        Validator.notNull("logger", logger);
+        Validator.notNull("type", type);
+        Validator.notNull("message", message);
+
+        if (isEnabled(level)) {
+            ThreadInfo ti = threadInfo.get();
+            if (!ti.inside) {
+                ti.inside = true;
+                try {
+                    Connector[] cs = connectors;
+                    for (int i = 0, ci = cs.length; i < ci; ++i) {
+                        cs[i].log(time, eventNumber.getAndIncrement(), input,
+                                  clazz, method, statement, file, line,
+                                  level, logger, type, exception, tag, tags, image, blob,
+                                  message, param1, param2);
+                    }
+                } finally {
+                    ti.inside = false;
+                }
+            }
+        }
     }
 
     public static void log(long time, Input input,
                            String clazz, String method, String statement, String file, int line,
                            Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
                            String message, Object param1, Object param2, Object param3) {
+        Validator.inRangeLong("time", time, 0L, Long.MAX_VALUE);
+        Validator.notNull("input", input);
+        Validator.notNull("level", level);
+        Validator.notNull("logger", logger);
+        Validator.notNull("type", type);
+        Validator.notNull("message", message);
+
+        if (isEnabled(level)) {
+            ThreadInfo ti = threadInfo.get();
+            if (!ti.inside) {
+                ti.inside = true;
+                try {
+                    Connector[] cs = connectors;
+                    for (int i = 0, ci = cs.length; i < ci; ++i) {
+                        cs[i].log(time, eventNumber.getAndIncrement(), input,
+                                  clazz, method, statement, file, line,
+                                  level, logger, type, exception, tag, tags, image, blob,
+                                  message, param1, param2, param3);
+                    }
+                } finally {
+                    ti.inside = false;
+                }
+            }
+        }
     }
 
     public static void log(long time, Input input,
                            String clazz, String method, String statement, String file, int line,
                            Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
                            String message, Object param1, Object param2, Object param3, Object param4) {
+        Validator.inRangeLong("time", time, 0L, Long.MAX_VALUE);
+        Validator.notNull("input", input);
+        Validator.notNull("level", level);
+        Validator.notNull("logger", logger);
+        Validator.notNull("type", type);
+        Validator.notNull("message", message);
+
+        if (isEnabled(level)) {
+            ThreadInfo ti = threadInfo.get();
+            if (!ti.inside) {
+                ti.inside = true;
+                try {
+                    Connector[] cs = connectors;
+                    for (int i = 0, ci = cs.length; i < ci; ++i) {
+                        cs[i].log(time, eventNumber.getAndIncrement(), input,
+                                  clazz, method, statement, file, line,
+                                  level, logger, type, exception, tag, tags, image, blob,
+                                  message, param1, param2, param3, param4);
+                    }
+                } finally {
+                    ti.inside = false;
+                }
+            }
+        }
     }
 
     public static void log(long time, Input input,
                            String clazz, String method, String statement, String file, int line,
                            Level level, String logger, Type type, Throwable exception, Tag tag, Tag[] tags, Image image, Blob blob,
                            String message, Object param1, Object param2, Object param3, Object param4, Object param5) {
+        Validator.inRangeLong("time", time, 0L, Long.MAX_VALUE);
+        Validator.notNull("input", input);
+        Validator.notNull("level", level);
+        Validator.notNull("logger", logger);
+        Validator.notNull("type", type);
+        Validator.notNull("message", message);
+
+        if (isEnabled(level)) {
+            ThreadInfo ti = threadInfo.get();
+            if (!ti.inside) {
+                ti.inside = true;
+                try {
+                    Connector[] cs = connectors;
+                    for (int i = 0, ci = cs.length; i < ci; ++i) {
+                        cs[i].log(time, eventNumber.getAndIncrement(), input,
+                                  clazz, method, statement, file, line,
+                                  level, logger, type, exception, tag, tags, image, blob,
+                                  message, param1, param2, param3, param4, param5);
+                    }
+                } finally {
+                    ti.inside = false;
+                }
+            }
+        }
     }
 
     public static void collect(String metric, long count, long value, int precision, String unit) {
