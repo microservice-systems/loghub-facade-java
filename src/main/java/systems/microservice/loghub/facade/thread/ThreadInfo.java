@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-package systems.microservice.loghub.facade;
+package systems.microservice.loghub.facade.thread;
 
+import systems.microservice.loghub.facade.Tag;
 import systems.microservice.loghub.facade.config.Validator;
 
-import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -29,8 +29,7 @@ import java.util.UUID;
  * @author Dmitry Kotlyarov
  * @since 1.0
  */
-public final class ThreadInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+public final class ThreadInfo {
     private static final ThreadLocal<ThreadInfo> info = ThreadLocal.withInitial(() -> new ThreadInfo());
 
     public final UUID guid;
