@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package systems.microservice.loghub.facade.thread;
+package systems.microservice.loghub.facade.concurrent;
 
 import systems.microservice.loghub.facade.Tag;
 import systems.microservice.loghub.facade.config.Validator;
