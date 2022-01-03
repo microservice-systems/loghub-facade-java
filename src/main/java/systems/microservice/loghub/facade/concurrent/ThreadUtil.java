@@ -76,4 +76,14 @@ public final class ThreadUtil {
             return false;
         }
     }
+
+    public static boolean shutdown() {
+        if (alive.get()) {
+            if (alive.compareAndSet(true, false)) {
+                sema.release();
+                return true;
+            }
+        }
+        return false;
+    }
 }
