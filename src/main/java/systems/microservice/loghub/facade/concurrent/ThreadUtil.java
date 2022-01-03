@@ -17,7 +17,10 @@
 
 package systems.microservice.loghub.facade.concurrent;
 
+import systems.microservice.loghub.facade.config.Validator;
+
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -28,10 +31,20 @@ import java.util.concurrent.atomic.AtomicLong;
 public final class ThreadUtil {
     private static final AtomicBoolean alive = new AtomicBoolean(true);
     private static final AtomicBoolean terminated = new AtomicBoolean(false);
-    private static final Semaphore sema = new Semaphore(1, false);
+    private static final Semaphore sema = createSema();
     private static final AtomicLong count = new AtomicLong(0L);
 
     private ThreadUtil() {
+    }
+
+    private static Semaphore createSema() {
+        try {
+            Semaphore s = new Semaphore(1, false);
+            s.acquire();
+            return s;
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static boolean isAlive() {
@@ -42,7 +55,25 @@ public final class ThreadUtil {
         return terminated.get();
     }
 
-    public static int sleep(long millis) {
-        return 0;
+    public static boolean sleep(long millis) {
+        Validator.inRangeLong("millis", millis, 0L, Long.MAX_VALUE);
+
+        if (alive.get()) {
+            try {
+                if (sema.tryAcquire(millis, TimeUnit.MILLISECONDS)) {
+                    try {
+                        return false;
+                    } finally {
+                        sema.release();
+                    }
+                } else {
+                    return true;
+                }
+            } catch (InterruptedException e) {
+                return true;
+            }
+        } else {
+            return false;
+        }
     }
 }
