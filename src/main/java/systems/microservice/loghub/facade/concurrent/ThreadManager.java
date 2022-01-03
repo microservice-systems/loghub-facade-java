@@ -33,6 +33,7 @@ public final class ThreadManager {
     private static final AtomicBoolean terminated = new AtomicBoolean(false);
     private static final Semaphore sema = createSema();
     private static final AtomicLong count = new AtomicLong(0L);
+    private static final Thread shutdownThread = createShutdownThread();
 
     private ThreadManager() {
     }
@@ -45,6 +46,19 @@ public final class ThreadManager {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static Thread createShutdownThread() {
+        Thread st = new Thread("loghub-shutdown-thread") {
+            @Override
+            public void run() {
+                ThreadManager.shutdown();
+                while (!ThreadManager.isTerminated());
+            }
+        };
+        st.setDaemon(false);
+        Runtime.getRuntime().addShutdownHook(st);
+        return st;
     }
 
     public static boolean isAlive() {
@@ -81,6 +95,9 @@ public final class ThreadManager {
         if (alive.get()) {
             if (alive.compareAndSet(true, false)) {
                 sema.release();
+                if (count.get() == 0L) {
+                    terminated.compareAndSet(false, true);
+                }
                 return true;
             }
         }
