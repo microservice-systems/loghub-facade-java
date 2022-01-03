@@ -28,13 +28,13 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author Dmitry Kotlyarov
  * @since 1.0
  */
-public final class ThreadUtil {
+public final class ThreadManager {
     private static final AtomicBoolean alive = new AtomicBoolean(true);
     private static final AtomicBoolean terminated = new AtomicBoolean(false);
     private static final Semaphore sema = createSema();
     private static final AtomicLong count = new AtomicLong(0L);
 
-    private ThreadUtil() {
+    private ThreadManager() {
     }
 
     private static Semaphore createSema() {
