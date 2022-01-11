@@ -21,7 +21,18 @@ package systems.microservice.loghub.facade.concurrent;
  * @author Dmitry Kotlyarov
  * @since 1.0
  */
-public final class ThreadKeeper {
+public final class ThreadKeeper implements AutoCloseable {
+    private boolean closed = false;
+
     public ThreadKeeper() {
+        ThreadManager.registerThread();
+    }
+
+    @Override
+    public void close() {
+        if (!closed) {
+            closed = true;
+            ThreadManager.deregisterThread();
+        }
     }
 }
