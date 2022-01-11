@@ -53,7 +53,8 @@ public final class ThreadManager {
             @Override
             public void run() {
                 ThreadManager.shutdown();
-                while (!ThreadManager.isTerminated());
+                while (!ThreadManager.isTerminated()) {
+                }
             }
         };
         st.setDaemon(false);
@@ -102,5 +103,18 @@ public final class ThreadManager {
             }
         }
         return false;
+    }
+
+    static void registerThread() {
+        count.incrementAndGet();
+    }
+
+    static void deregisterThread() {
+        long c = count.decrementAndGet();
+        if (!alive.get()) {
+            if (c == 0L) {
+                terminated.compareAndSet(false, true);
+            }
+        }
     }
 }
