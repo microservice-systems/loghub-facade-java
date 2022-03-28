@@ -92,6 +92,181 @@ public final class ThreadManager {
         }
     }
 
+    public static int sleep(long millis, long delay, AtomicBoolean cond1) {
+        Validator.inRangeLong("millis", millis, 0L, Long.MAX_VALUE);
+        Validator.inRangeLong("delay", delay, 0L, Long.MAX_VALUE);
+        Validator.notNull("cond1", cond1);
+
+        if (alive.get()) {
+            for (long m = millis; m > 0L; m -= delay) {
+                if (cond1.get()) {
+                    return 1;
+                } else {
+                    try {
+                        if (sema.tryAcquire(Math.min(m, delay), TimeUnit.MILLISECONDS)) {
+                            try {
+                                return -1;
+                            } finally {
+                                sema.release();
+                            }
+                        }
+                    } catch (InterruptedException e) {
+                        return 0;
+                    }
+                }
+            }
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
+    public static int sleep(long millis, long delay, AtomicBoolean cond1, AtomicBoolean cond2) {
+        Validator.inRangeLong("millis", millis, 0L, Long.MAX_VALUE);
+        Validator.inRangeLong("delay", delay, 0L, Long.MAX_VALUE);
+        Validator.notNull("cond1", cond1);
+        Validator.notNull("cond2", cond2);
+
+        if (alive.get()) {
+            for (long m = millis; m > 0L; m -= delay) {
+                if (cond1.get()) {
+                    return 1;
+                } else if (cond2.get()) {
+                    return 2;
+                } else {
+                    try {
+                        if (sema.tryAcquire(Math.min(m, delay), TimeUnit.MILLISECONDS)) {
+                            try {
+                                return -1;
+                            } finally {
+                                sema.release();
+                            }
+                        }
+                    } catch (InterruptedException e) {
+                        return 0;
+                    }
+                }
+            }
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
+    public static int sleep(long millis, long delay, AtomicBoolean cond1, AtomicBoolean cond2, AtomicBoolean cond3) {
+        Validator.inRangeLong("millis", millis, 0L, Long.MAX_VALUE);
+        Validator.inRangeLong("delay", delay, 0L, Long.MAX_VALUE);
+        Validator.notNull("cond1", cond1);
+        Validator.notNull("cond2", cond2);
+        Validator.notNull("cond3", cond3);
+
+        if (alive.get()) {
+            for (long m = millis; m > 0L; m -= delay) {
+                if (cond1.get()) {
+                    return 1;
+                } else if (cond2.get()) {
+                    return 2;
+                } else if (cond3.get()) {
+                    return 3;
+                } else {
+                    try {
+                        if (sema.tryAcquire(Math.min(m, delay), TimeUnit.MILLISECONDS)) {
+                            try {
+                                return -1;
+                            } finally {
+                                sema.release();
+                            }
+                        }
+                    } catch (InterruptedException e) {
+                        return 0;
+                    }
+                }
+            }
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
+    public static int sleep(long millis, long delay, AtomicBoolean cond1, AtomicBoolean cond2, AtomicBoolean cond3, AtomicBoolean cond4) {
+        Validator.inRangeLong("millis", millis, 0L, Long.MAX_VALUE);
+        Validator.inRangeLong("delay", delay, 0L, Long.MAX_VALUE);
+        Validator.notNull("cond1", cond1);
+        Validator.notNull("cond2", cond2);
+        Validator.notNull("cond3", cond3);
+        Validator.notNull("cond4", cond4);
+
+        if (alive.get()) {
+            for (long m = millis; m > 0L; m -= delay) {
+                if (cond1.get()) {
+                    return 1;
+                } else if (cond2.get()) {
+                    return 2;
+                } else if (cond3.get()) {
+                    return 3;
+                } else if (cond4.get()) {
+                    return 4;
+                } else {
+                    try {
+                        if (sema.tryAcquire(Math.min(m, delay), TimeUnit.MILLISECONDS)) {
+                            try {
+                                return -1;
+                            } finally {
+                                sema.release();
+                            }
+                        }
+                    } catch (InterruptedException e) {
+                        return 0;
+                    }
+                }
+            }
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
+    public static int sleep(long millis, long delay, AtomicBoolean cond1, AtomicBoolean cond2, AtomicBoolean cond3, AtomicBoolean cond4, AtomicBoolean cond5) {
+        Validator.inRangeLong("millis", millis, 0L, Long.MAX_VALUE);
+        Validator.inRangeLong("delay", delay, 0L, Long.MAX_VALUE);
+        Validator.notNull("cond1", cond1);
+        Validator.notNull("cond2", cond2);
+        Validator.notNull("cond3", cond3);
+        Validator.notNull("cond4", cond4);
+        Validator.notNull("cond5", cond5);
+
+        if (alive.get()) {
+            for (long m = millis; m > 0L; m -= delay) {
+                if (cond1.get()) {
+                    return 1;
+                } else if (cond2.get()) {
+                    return 2;
+                } else if (cond3.get()) {
+                    return 3;
+                } else if (cond4.get()) {
+                    return 4;
+                } else if (cond5.get()) {
+                    return 5;
+                } else {
+                    try {
+                        if (sema.tryAcquire(Math.min(m, delay), TimeUnit.MILLISECONDS)) {
+                            try {
+                                return -1;
+                            } finally {
+                                sema.release();
+                            }
+                        }
+                    } catch (InterruptedException e) {
+                        return 0;
+                    }
+                }
+            }
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
     public static boolean shutdown() {
         if (alive.get()) {
             if (alive.compareAndSet(true, false)) {
