@@ -27,7 +27,7 @@ import java.util.Map;
 public enum Input {
     FACADE((byte) 1),
     JUL((byte) 2),
-    LOG4J2((byte) 3),
+    LOG4J((byte) 3),
     LOGBACK((byte) 4),
     CUSTOM((byte) 127);
 
@@ -43,7 +43,7 @@ public enum Input {
         Map<Byte, Input> is = new HashMap<>(32);
         is.put(FACADE.id, FACADE);
         is.put(JUL.id, JUL);
-        is.put(LOG4J2.id, LOG4J2);
+        is.put(LOG4J.id, LOG4J);
         is.put(LOGBACK.id, LOGBACK);
         is.put(CUSTOM.id, CUSTOM);
         return is;
