@@ -27,7 +27,20 @@ import java.util.Map;
 public enum JobType {
     GITHUB((byte) 1),
     GITLAB((byte) 2),
-    BITBUCKET((byte) 3);
+    BITBUCKET((byte) 3),
+    JENKINS((byte) 4),
+    TEAMCITY((byte) 5),
+    BAMBOO((byte) 6),
+    CIRCLECI((byte) 7),
+    BUDDY((byte) 8),
+    TRAVISCI((byte) 9),
+    CODESHIP((byte) 10),
+    GOCD((byte) 11),
+    WERCKER((byte) 12),
+    SEMAPHORE((byte) 13),
+    CODEMAGIC((byte) 14),
+    SPINNAKER((byte) 15),
+    BUILDBOT((byte) 16);
 
     private static final Map<Byte, JobType> jobTypes = createJobTypes();
 
@@ -42,6 +55,19 @@ public enum JobType {
         jts.put(GITHUB.id, GITHUB);
         jts.put(GITLAB.id, GITLAB);
         jts.put(BITBUCKET.id, BITBUCKET);
+        jts.put(JENKINS.id, JENKINS);
+        jts.put(TEAMCITY.id, TEAMCITY);
+        jts.put(BAMBOO.id, BAMBOO);
+        jts.put(CIRCLECI.id, CIRCLECI);
+        jts.put(BUDDY.id, BUDDY);
+        jts.put(TRAVISCI.id, TRAVISCI);
+        jts.put(CODESHIP.id, CODESHIP);
+        jts.put(GOCD.id, GOCD);
+        jts.put(WERCKER.id, WERCKER);
+        jts.put(SEMAPHORE.id, SEMAPHORE);
+        jts.put(CODEMAGIC.id, CODEMAGIC);
+        jts.put(SPINNAKER.id, SPINNAKER);
+        jts.put(BUILDBOT.id, BUILDBOT);
         return jts;
     }
 
