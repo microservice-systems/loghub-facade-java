@@ -115,7 +115,11 @@ public final class ThreadManager {
                     }
                 }
             }
-            return 0;
+            if (cond1.get()) {
+                return 1;
+            } else {
+                return 0;
+            }
         } else {
             return -1;
         }
@@ -147,7 +151,13 @@ public final class ThreadManager {
                     }
                 }
             }
-            return 0;
+            if (cond1.get()) {
+                return 1;
+            } else if (cond2.get()) {
+                return 2;
+            } else {
+                return 0;
+            }
         } else {
             return -1;
         }
@@ -182,7 +192,15 @@ public final class ThreadManager {
                     }
                 }
             }
-            return 0;
+            if (cond1.get()) {
+                return 1;
+            } else if (cond2.get()) {
+                return 2;
+            } else if (cond3.get()) {
+                return 3;
+            } else {
+                return 0;
+            }
         } else {
             return -1;
         }
@@ -220,7 +238,17 @@ public final class ThreadManager {
                     }
                 }
             }
-            return 0;
+            if (cond1.get()) {
+                return 1;
+            } else if (cond2.get()) {
+                return 2;
+            } else if (cond3.get()) {
+                return 3;
+            } else if (cond4.get()) {
+                return 4;
+            } else {
+                return 0;
+            }
         } else {
             return -1;
         }
@@ -261,7 +289,19 @@ public final class ThreadManager {
                     }
                 }
             }
-            return 0;
+            if (cond1.get()) {
+                return 1;
+            } else if (cond2.get()) {
+                return 2;
+            } else if (cond3.get()) {
+                return 3;
+            } else if (cond4.get()) {
+                return 4;
+            } else if (cond5.get()) {
+                return 5;
+            } else {
+                return 0;
+            }
         } else {
             return -1;
         }
