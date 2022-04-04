@@ -22,4 +22,27 @@ package systems.microservice.loghub.facade;
  * @since 1.0
  */
 public final class ConfigDefaults {
+    public static String central = "loghub.dev";
+    public static String organization = null;
+    public static String environment = null;
+    public static String registry = null;
+    public static String group = null;
+    public static String application = null;
+    public static String version = null;
+    public static String revision = null;
+    public static String name = null;
+    public static String description = null;
+    public static String repository = null;
+    public static String job = null;
+    public static String pipeline = null;
+    public static String branch = null;
+    public static String commit = null;
+    public static String commitBefore = null;
+    public static String commitMessage = null;
+    public static String maintainer = null;
+    public static String maintainerName = null;
+    public static String maintainerEmail = null;
+
+    private ConfigDefaults() {
+    }
 }
