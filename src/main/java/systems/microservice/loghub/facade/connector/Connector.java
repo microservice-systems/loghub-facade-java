@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
-package systems.microservice.loghub.facade;
+package systems.microservice.loghub.facade.connector;
+
+import systems.microservice.loghub.facade.Blob;
+import systems.microservice.loghub.facade.Image;
+import systems.microservice.loghub.facade.Input;
+import systems.microservice.loghub.facade.Level;
+import systems.microservice.loghub.facade.Tag;
+import systems.microservice.loghub.facade.Type;
 
 /**
  * @author Dmitry Kotlyarov

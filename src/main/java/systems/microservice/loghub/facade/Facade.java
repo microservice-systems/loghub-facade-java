@@ -18,6 +18,7 @@
 package systems.microservice.loghub.facade;
 
 import systems.microservice.loghub.facade.config.Validator;
+import systems.microservice.loghub.facade.connector.Connector;
 
 import java.util.ArrayList;
 import java.util.ServiceLoader;
