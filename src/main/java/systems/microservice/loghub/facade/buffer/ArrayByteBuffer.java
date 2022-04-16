@@ -27,12 +27,12 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Dmitry Kotlyarov
  * @since 1.0
  */
-public final class ArrayBuffer implements Buffer {
+public final class ArrayByteBuffer implements ByteBuffer {
     private final ThreadSection section;
     private final byte[] array;
     private final AtomicInteger index;
 
-    public ArrayBuffer(int length) {
+    public ArrayByteBuffer(int length) {
         Validator.inRangeInt("length", length, 0, Integer.MAX_VALUE);
 
         this.section = new ThreadSection(true);
