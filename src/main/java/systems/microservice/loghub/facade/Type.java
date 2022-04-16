@@ -49,7 +49,7 @@ public enum Type {
     }
 
     private static Map<Byte, Type> createTypes() {
-        Map<Byte, Type> ts = new HashMap<>(32);
+        Map<Byte, Type> ts = new HashMap<>(16);
         ts.put(DEFAULT.id, DEFAULT);
         ts.put(EXCEPTION.id, EXCEPTION);
         ts.put(BEGIN.id, BEGIN);

@@ -40,7 +40,7 @@ public enum Input {
     }
 
     private static Map<Byte, Input> createInputs() {
-        Map<Byte, Input> is = new HashMap<>(32);
+        Map<Byte, Input> is = new HashMap<>(8);
         is.put(FACADE.id, FACADE);
         is.put(JUL.id, JUL);
         is.put(LOG4J.id, LOG4J);

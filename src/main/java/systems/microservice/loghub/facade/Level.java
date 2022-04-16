@@ -40,7 +40,7 @@ public enum Level {
     }
 
     private static Map<Byte, Level> createLevels() {
-        Map<Byte, Level> ls = new HashMap<>(32);
+        Map<Byte, Level> ls = new HashMap<>(8);
         ls.put(ERROR.id, ERROR);
         ls.put(WARN.id, WARN);
         ls.put(INFO.id, INFO);
