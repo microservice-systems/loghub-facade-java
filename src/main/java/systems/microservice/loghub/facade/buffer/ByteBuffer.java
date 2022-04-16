@@ -23,7 +23,7 @@ import java.io.OutputStream;
  * @author Dmitry Kotlyarov
  * @since 1.0
  */
-public interface Buffer {
+public interface ByteBuffer {
     public boolean isReady();
     public boolean append(byte[] array, int offset, int length);
     public boolean send(OutputStream output);
