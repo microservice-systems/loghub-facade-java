@@ -19,17 +19,15 @@ package systems.microservice.loghub.facade.buffer;
 
 import systems.microservice.loghub.facade.config.Validator;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Dmitry Kotlyarov
  * @since 1.0
  */
-public final class FileBuffer implements Buffer {
+public final class FileByteBuffer implements ByteBuffer {
     private final Object lock;
     private final String file;
     private final long length;
@@ -37,7 +35,7 @@ public final class FileBuffer implements Buffer {
     private final RandomAccessFile pointer2;
     private long index;
 
-    public FileBuffer(String file, long length) {
+    public FileByteBuffer(String file, long length) {
         Validator.notNull("file", file);
         Validator.inRangeLong("length", length, 0L, Long.MAX_VALUE);
 
