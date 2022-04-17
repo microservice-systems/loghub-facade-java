@@ -36,7 +36,6 @@ public final class Event implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public final UUID id;
-    public final long number;
     public final long time;
     public final Level level;
     public final String logger;
@@ -45,13 +44,16 @@ public final class Event implements Serializable {
     public final EventSource source;
     public final EventException exception;
     public final Map<String, Tag> tags;
+    public final EventThread thread;
+    public final EventProcess process;
+    public final EventUsage usage;
     public final EventConfig config;
+    public final EventInfo info;
     public final Image image;
     public final Blob blob;
 
     public Event(FormatInputStream input) {
         this.id = null;
-        this.number = 0L;
         this.time = 0L;
         this.level = null;
         this.logger = null;
@@ -60,14 +62,17 @@ public final class Event implements Serializable {
         this.source = null;
         this.exception = null;
         this.tags = null;
+        this.thread = null;
+        this.process = null;
+        this.usage = null;
         this.config = null;
+        this.info = null;
         this.image = null;
         this.blob = null;
     }
 
-    public Event(UUID id, long number, long time, Level level, String logger, Type type, String message, EventSource source, EventException exception, Map<String, Tag> tags, EventConfig config, Image image, Blob blob) {
+    public Event(UUID id, long time, Level level, String logger, Type type, String message, EventSource source, EventException exception, Map<String, Tag> tags, EventThread thread, EventProcess process, EventUsage usage, EventConfig config, EventInfo info, Image image, Blob blob) {
         this.id = id;
-        this.number = number;
         this.time = time;
         this.level = level;
         this.logger = logger;
@@ -76,7 +81,11 @@ public final class Event implements Serializable {
         this.source = source;
         this.exception = exception;
         this.tags = tags;
+        this.thread = thread;
+        this.process = process;
+        this.usage = usage;
         this.config = config;
+        this.info = info;
         this.image = image;
         this.blob = blob;
     }
