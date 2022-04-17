@@ -17,6 +17,9 @@
 
 package systems.microservice.loghub.facade;
 
+import java.net.InetAddress;
+import java.util.UUID;
+
 /**
  * @author Dmitry Kotlyarov
  * @since 1.0
@@ -42,7 +45,35 @@ public final class ConfigDefaults {
     public static String maintainer = null;
     public static String maintainerName = null;
     public static String maintainerEmail = null;
+    public static String instance = createInstance();
 
     private ConfigDefaults() {
+    }
+
+    private static String getHostName() {
+        try {
+            return InetAddress.getLocalHost().getHostName();
+        } catch (Throwable e) {
+            return null;
+        }
+    }
+
+    private static String getHostAddress() {
+        try {
+            return InetAddress.getLocalHost().getHostAddress();
+        } catch (Throwable e) {
+            return null;
+        }
+    }
+
+    private static String createInstance() {
+        String i = getHostName();
+        if (i == null) {
+            i = getHostAddress();
+            if (i == null) {
+                i = UUID.randomUUID().toString();
+            }
+        }
+        return String.format("java-%s", i);
     }
 }

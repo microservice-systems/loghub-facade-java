@@ -45,6 +45,7 @@ public final class Config {
     public static final String MAINTAINER = Property.get("MAINTAINER", "maintainer", "/META-INF/loghub/MAINTAINER", ConfigDefaults.maintainer);
     public static final String MAINTAINER_NAME = Property.get("MAINTAINER_NAME", "maintainerName", "/META-INF/loghub/MAINTAINER_NAME", ConfigDefaults.maintainerName);
     public static final String MAINTAINER_EMAIL = Property.get("MAINTAINER_EMAIL", "maintainerEmail", "/META-INF/loghub/MAINTAINER_EMAIL", ConfigDefaults.maintainerEmail);
+    public static final String INSTANCE = Validator.instanceNullable("INSTANCE", Property.get("INSTANCE", "instance", "/META-INF/loghub/INSTANCE", ConfigDefaults.instance));
 
     private Config() {
     }
