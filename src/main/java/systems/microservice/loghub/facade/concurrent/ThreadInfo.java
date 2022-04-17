@@ -32,18 +32,29 @@ import java.util.UUID;
 public final class ThreadInfo {
     private static final ThreadLocal<ThreadInfo> info = ThreadLocal.withInitial(() -> new ThreadInfo());
 
-    public final UUID guid;
+    public final UUID id;
+    public final long tid;
+    public final String group;
+    public final String name;
+    public final int priority;
     public final Thread thread;
     public final SecureRandom random;
     public final LinkedHashMap<String, ArrayList<Tag>> tags;
-    public int depth;
+    public long depth;
 
     private ThreadInfo() {
-        this.guid = UUID.randomUUID();
-        this.thread = Thread.currentThread();
+        Thread t = Thread.currentThread();
+        ThreadGroup g = t.getThreadGroup();
+
+        this.id = UUID.randomUUID();
+        this.tid = t.getId();
+        this.group = (g != null) ? g.getName() : null;
+        this.name = t.getName();
+        this.priority = t.getPriority();
+        this.thread = t;
         this.random = new SecureRandom();
         this.tags = new LinkedHashMap<>(64);
-        this.depth = 0;
+        this.depth = 0L;
     }
 
     public Tag getTag(String key) {
