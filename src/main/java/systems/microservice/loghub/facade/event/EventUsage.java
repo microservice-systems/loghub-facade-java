@@ -149,6 +149,22 @@ public final class EventUsage implements Serializable {
 
     public static final class Disk implements Serializable {
         private static final long serialVersionUID = 1L;
+
+        public final long total;
+        public final long free;
+        public final long usable;
+
+        public Disk(FormatInputStream input) {
+            this.total = 0L;
+            this.free = 0L;
+            this.usable = 0L;
+        }
+
+        public Disk(long total, long free, long usable) {
+            this.total = total;
+            this.free = free;
+            this.usable = usable;
+        }
     }
 
     public static final class Network implements Serializable {

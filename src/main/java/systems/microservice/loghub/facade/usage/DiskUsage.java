@@ -17,6 +17,7 @@
 
 package systems.microservice.loghub.facade.usage;
 
+import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -25,4 +26,17 @@ import java.io.Serializable;
  */
 public final class DiskUsage implements Serializable {
     private static final long serialVersionUID = 1L;
+    private static final File ROOT_DISK = new File("/");
+
+    public final long total;
+    public final long free;
+    public final long usable;
+
+    public DiskUsage() {
+        long mb = 1048576L;
+
+        this.total = ROOT_DISK.getTotalSpace() / mb;
+        this.free = ROOT_DISK.getFreeSpace() / mb;
+        this.usable = ROOT_DISK.getUsableSpace() / mb;
+    }
 }
