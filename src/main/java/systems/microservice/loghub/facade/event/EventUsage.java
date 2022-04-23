@@ -17,9 +17,12 @@
 
 package systems.microservice.loghub.facade.event;
 
+import systems.microservice.loghub.facade.config.Validator;
 import systems.microservice.loghub.facade.io.FormatInputStream;
+import systems.microservice.loghub.facade.usage.NetworkUsage;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author Dmitry Kotlyarov
@@ -38,6 +41,8 @@ public final class EventUsage implements Serializable {
     public final GC gc;
 
     public EventUsage(FormatInputStream input) {
+        Validator.notNull("input", input);
+
         this.cpu = null;
         this.memory = null;
         this.disk = null;
@@ -70,6 +75,8 @@ public final class EventUsage implements Serializable {
         public final int entityTotal;
 
         public CPU(FormatInputStream input) {
+            Validator.notNull("input", input);
+
             this.count = 0;
             this.m01 = 0.0f;
             this.m05 = 0.0f;
@@ -95,6 +102,8 @@ public final class EventUsage implements Serializable {
         public final long free;
 
         protected Memory(FormatInputStream input) {
+            Validator.notNull("input", input);
+
             this.total = 0L;
             this.free = 0L;
         }
@@ -155,6 +164,8 @@ public final class EventUsage implements Serializable {
         public final long usable;
 
         public Disk(FormatInputStream input) {
+            Validator.notNull("input", input);
+
             this.total = 0L;
             this.free = 0L;
             this.usable = 0L;
@@ -169,6 +180,90 @@ public final class EventUsage implements Serializable {
 
     public static final class Network implements Serializable {
         private static final long serialVersionUID = 1L;
+
+        public final Map<String, Interface> interfaces;
+
+        public Network(FormatInputStream input) {
+            Validator.notNull("input", input);
+
+            this.interfaces = null;
+        }
+
+        public Network(Map<String, Interface> interfaces) {
+            Validator.notNull("interfaces", interfaces);
+
+            this.interfaces = interfaces;
+        }
+
+        public static final class Interface implements Serializable {
+            private static final long serialVersionUID = 1L;
+
+            public final String name;
+            public final Receive receive;
+            public final Transmit transmit;
+
+            public Interface(FormatInputStream input) {
+                Validator.notNull("input", input);
+
+                this.name = null;
+                this.receive = null;
+                this.transmit = null;
+            }
+
+            public Interface(String name, Receive receive, Transmit transmit) {
+                Validator.notNull("name", name);
+                Validator.notNull("receive", receive);
+                Validator.notNull("transmit", transmit);
+
+                this.name = name;
+                this.receive = receive;
+                this.transmit = transmit;
+            }
+
+            public static final class Receive implements Serializable {
+                private static final long serialVersionUID = 1L;
+
+                public final long bytes;
+                public final long packets;
+
+                public Receive(FormatInputStream input) {
+                    Validator.notNull("input", input);
+
+                    this.bytes = 0L;
+                    this.packets = 0L;
+                }
+
+                public Receive(long bytes, long packets) {
+                    Validator.inRangeLong("bytes", bytes, 0L, Long.MAX_VALUE);
+                    Validator.inRangeLong("packets", packets, 0L, Long.MAX_VALUE);
+
+                    this.bytes = bytes;
+                    this.packets = packets;
+                }
+            }
+
+            public static final class Transmit implements Serializable {
+                private static final long serialVersionUID = 1L;
+
+                public final long bytes;
+                public final long packets;
+
+                public Transmit(FormatInputStream input) {
+                    Validator.notNull("input", input);
+
+                    this.bytes = 0L;
+                    this.packets = 0L;
+                }
+
+                public Transmit(long bytes, long packets) {
+                    Validator.inRangeLong("bytes", bytes, 0L, Long.MAX_VALUE);
+                    Validator.inRangeLong("packets", packets, 0L, Long.MAX_VALUE);
+
+                    this.bytes = bytes;
+                    this.packets = packets;
+                }
+            }
+        }
     }
 
     public static final class Class implements Serializable {

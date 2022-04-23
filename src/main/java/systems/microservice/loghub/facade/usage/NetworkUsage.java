@@ -17,7 +17,13 @@
 
 package systems.microservice.loghub.facade.usage;
 
+import systems.microservice.loghub.facade.config.Validator;
+import systems.microservice.loghub.facade.util.StringUtil;
+
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author Dmitry Kotlyarov
@@ -25,4 +31,122 @@ import java.io.Serializable;
  */
 public final class NetworkUsage implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    public final Map<String, Interface> interfaces;
+
+    public NetworkUsage() {
+        this.interfaces = createInterfaces();
+    }
+
+    private static Map<String, Interface> createInterfaces() {
+        try {
+            String dev = StringUtil.load("/proc/self/net/dev", null);
+            if (dev != null) {
+                String[] devs = dev.split("\n");
+                LinkedHashMap<String, Interface> is = new LinkedHashMap<>(devs.length);
+                for (int i = 2, ci = devs.length; i < ci; ++i) {
+                    String d = devs[i];
+                    String n = null;
+                    int j = 0;
+                    int k = 0;
+                    int cj = d.length();
+                    for (; j < cj; ++j) {
+                        if (d.charAt(j) == ':') {
+                            n = d.substring(k, j).trim();
+                            ++j;
+                            break;
+                        }
+                    }
+                    if (n != null) {
+                        long rbs = 0L;
+                        long rps = 0L;
+                        long tbs = 0L;
+                        long tps = 0L;
+                        j = StringUtil.skipChars(d, j, ' ');
+                        k = j;
+                        j = StringUtil.skipDigits(d, j);
+                        rbs = Long.parseLong(d.substring(k, j));
+                        j = StringUtil.skipChars(d, j, ' ');
+                        k = j;
+                        j = StringUtil.skipDigits(d, j);
+                        rps = Long.parseLong(d.substring(k, j));
+                        j = StringUtil.skipChars(d, j, ' ');
+                        j = StringUtil.skipDigits(d, j);
+                        j = StringUtil.skipChars(d, j, ' ');
+                        j = StringUtil.skipDigits(d, j);
+                        j = StringUtil.skipChars(d, j, ' ');
+                        j = StringUtil.skipDigits(d, j);
+                        j = StringUtil.skipChars(d, j, ' ');
+                        j = StringUtil.skipDigits(d, j);
+                        j = StringUtil.skipChars(d, j, ' ');
+                        j = StringUtil.skipDigits(d, j);
+                        j = StringUtil.skipChars(d, j, ' ');
+                        j = StringUtil.skipDigits(d, j);
+                        j = StringUtil.skipChars(d, j, ' ');
+                        k = j;
+                        j = StringUtil.skipDigits(d, j);
+                        tbs = Long.parseLong(d.substring(k, j));
+                        j = StringUtil.skipChars(d, j, ' ');
+                        k = j;
+                        j = StringUtil.skipDigits(d, j);
+                        tps = Long.parseLong(d.substring(k, j));
+                        is.put(n, new Interface(n, new Interface.Receive(rbs, rps), new Interface.Transmit(tbs, tps)));
+                    }
+                }
+                return Collections.unmodifiableMap(is);
+            } else {
+                return Collections.emptyMap();
+            }
+        } catch (Exception e) {
+            return Collections.emptyMap();
+        }
+    }
+
+    public static final class Interface implements Serializable {
+        private static final long serialVersionUID = 1L;
+
+        public final String name;
+        public final Receive receive;
+        public final Transmit transmit;
+
+        public Interface(String name, Receive receive, Transmit transmit) {
+            Validator.notNull("name", name);
+            Validator.notNull("receive", receive);
+            Validator.notNull("transmit", transmit);
+
+            this.name = name;
+            this.receive = receive;
+            this.transmit = transmit;
+        }
+
+        public static final class Receive implements Serializable {
+            private static final long serialVersionUID = 1L;
+
+            public final long bytes;
+            public final long packets;
+
+            public Receive(long bytes, long packets) {
+                Validator.inRangeLong("bytes", bytes, 0L, Long.MAX_VALUE);
+                Validator.inRangeLong("packets", packets, 0L, Long.MAX_VALUE);
+
+                this.bytes = bytes;
+                this.packets = packets;
+            }
+        }
+
+        public static final class Transmit implements Serializable {
+            private static final long serialVersionUID = 1L;
+
+            public final long bytes;
+            public final long packets;
+
+            public Transmit(long bytes, long packets) {
+                Validator.inRangeLong("bytes", bytes, 0L, Long.MAX_VALUE);
+                Validator.inRangeLong("packets", packets, 0L, Long.MAX_VALUE);
+
+                this.bytes = bytes;
+                this.packets = packets;
+            }
+        }
+    }
 }
